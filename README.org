@@ -1,0 +1,49 @@
+* About
+
+This Common Lisp package provides macro ~let-alist~ modeled by Emacs lisp macro of
+same name that simplifies access to (even buried) assoc lists. The rest of this
+section quotes Emacs documentation:
+
+Creates a binding for each symbol used as keys the association list ALIST,
+prefixed with dot.  This can be useful when accessing several items in the same
+association list, and it’s best understood through a simple example:
+
+#+begin_src lisp
+  (let-alist '((:rose . red) (:lily . white) (:buttercup . yellow))
+    (if (eq .rose 'red)
+        .lily))
+       #+end_src
+
+#+begin_src lisp
+  ⇒ white
+#+end_src
+
+     The BODY is inspected at compilation time, and only the symbols
+     that appear in BODY with a ‘.’ as the first character in the symbol
+     name will be bound.  Finding the keys is done with ‘assoc’, and the
+     ‘cdr’ of the return value of this ‘assoc’ is assigned as the value
+     for the binding.
+
+     Nested association lists is supported:
+
+#+begin_src lisp :package let-alist
+  (let-alist '((:rose . red) (:lily (:belladonna . yellow) (:brindisi . pink)))
+    (if (eq .rose 'red)
+        .lily.belladonna))
+       #+end_src
+
+#+begin_src lisp
+       ⇒ yellow
+#+end_src
+
+Nesting ‘let-alist’ inside each other is allowed, but the code in the inner ‘let-alist’ can’t access the variables bound by the outer ‘let-alist’.
+
+* Differencies from Emacs version
+- The primary package used is /KEYWORD/ - it means that ~.foo~ symbol (variable
+  name) looks for ~:foo~ keyword in the alist (actually, this is what parsing from
+  json and/or xml often ends up with)
+
+
+* License
+This is modified (translated from emacs lisp to Common Lisp) let-alist.el
+file from GNU Emacs. As such, it is (and needs to be) under GNU GPL.
