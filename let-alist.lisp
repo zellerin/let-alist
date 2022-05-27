@@ -63,5 +63,5 @@ in BODY are let-bound and this search is done at compile time."
   (let ((var (make-symbol "alist")))
     `(let ((,var ,alist))
        (let ,(mapcar (lambda (x) `(,(car x) ,(access-sexp (car x) var)))
-                     (remove-duplicates (deep-dot-search body)))
+                     (remove-duplicates (deep-dot-search body) :key 'car))
          ,@body))))
