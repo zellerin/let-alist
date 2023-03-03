@@ -4,5 +4,4 @@
   :license  "GNU GPL"
   :version "0.9"
   :depends-on ("split-sequence")
-  :components ((:file "package")
-               (:file "let-alist")))
+  :components ((:file "let-alist")))
