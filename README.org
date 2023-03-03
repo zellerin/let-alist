@@ -1,8 +1,9 @@
 * About
 
-This Common Lisp package provides macro ~let-alist~ modeled by Emacs lisp macro of
-same name that simplifies access to (even buried) assoc lists. The rest of this
-section quotes Emacs documentation:
+This Common Lisp package provides macros ~let-alist~ and ~let-dolist-alist~ that simplify access to (even buried) assoc lists.
+
+The ~let-alist~ macro is modeled by Emacs lisp macro of same name. The rest of
+this section quotes Emacs documentation:
 
 Creates a binding for each symbol used as keys the association list ALIST,
 prefixed with dot.  This can be useful when accessing several items in the same
@@ -42,6 +43,8 @@ Nesting ‘let-alist’ inside each other is allowed, but the code in the inner 
 - The primary package used is /KEYWORD/ - it means that ~.foo~ symbol (variable
   name) looks for ~:foo~ keyword in the alist (actually, this is what parsing from
   json and/or xml often ends up with)
+
+* Exported symbols
 
 
 * License
