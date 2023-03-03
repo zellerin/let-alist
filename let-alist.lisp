@@ -5,7 +5,7 @@
 
 (defpackage #:let-alist
   (:use #:cl)
-  (:export #:let-alist))
+  (:export #:let-alist #:let-dolist-alist))
 
 (in-package #:let-alist)
 
@@ -65,3 +65,10 @@ in BODY are let-bound and this search is done at compile time."
        (let ,(mapcar (lambda (x) `(,(car x) ,(access-sexp (car x) var)))
                      (remove-duplicates (deep-dot-search body) :key 'car))
          ,@body))))
+
+(defmacro let-dolist-alist (list &body body)
+  "Perform LET-ALIST on each member of LIST (evaluated)."
+  (let ((varname (gensym "ALIST")))
+    `(dolist (,varname ,list)
+       (with-simple-restart (continue "Skip to next alist")
+         (let-alist ,varname ,@body)))))
